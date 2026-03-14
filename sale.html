@@ -266,6 +266,27 @@
       border-radius: var(--radius);
       position: relative;
     }
+    /* علامة مائية POS DZ في خلفية السلة */
+    .cart-area::before {
+      content: "POS DZ";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Impact, sans-serif;
+      font-size: clamp(5rem, 18vw, 11rem);
+      font-weight: 900;
+      letter-spacing: 12px;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--primary);
+      opacity: 0.07;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      white-space: nowrap;
+      background: transparent;
+    }
+    .cart-items { position: relative; z-index: 1; }
 
     .cart-header {
       display: grid;
@@ -901,7 +922,10 @@
     
     <div class="app-brand">
       <span class="brand-title">POS DZ</span>
-      <span class="brand-clock" id="clockDisplay"></span>
+      <div class="brand-clock">
+        <span class="brand-date" id="clockDate"></span>
+        <span class="brand-time" id="clockTime"></span>
+      </div>
     </div>
   </header>
 
