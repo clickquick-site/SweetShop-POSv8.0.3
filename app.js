@@ -1635,23 +1635,26 @@ async function dbGetByRange(store, idx, lo, hi) {
 
 // دوال أخرى
 function startClock() {
-  const el = document.getElementById('clockDisplay');
-  if (!el) return;
-  
+  // دعم البنية الجديدة (date+time منفصلان) والقديمة معاً
+  const elDate = document.getElementById('clockDate');
+  const elTime = document.getElementById('clockTime');
+  const elLegacy = document.getElementById('clockDisplay');
+
   function tick() {
     const now = new Date();
-    el.textContent = now.toLocaleDateString('ar-DZ', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    }) + ' ' + now.toLocaleTimeString('ar-DZ', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false
-    });
+    const yy  = now.getFullYear();
+    const mm  = String(now.getMonth() + 1).padStart(2, '0');
+    const dd  = String(now.getDate()).padStart(2, '0');
+    const hh  = String(now.getHours()).padStart(2, '0');
+    const mi  = String(now.getMinutes()).padStart(2, '0');
+    const ss  = String(now.getSeconds()).padStart(2, '0');
+    const dateStr = `${yy}/${mm}/${dd}`;
+    const timeStr = `${hh}:${mi}:${ss}`;
+    if (elDate) elDate.textContent = dateStr;
+    if (elTime) elTime.textContent = timeStr;
+    if (elLegacy) elLegacy.textContent = dateStr + '  ' + timeStr;
   }
-  
+
   tick();
   setInterval(tick, 1000);
 }
